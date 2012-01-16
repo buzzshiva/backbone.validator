@@ -3,7 +3,7 @@ MIN = backbone.validator.min.js
 
 min: ${MIN}
 
-${MIN}:
+${MIN}: ${SRC}
 	uglifyjs ${SRC} > ${MIN}
 
 clean:
