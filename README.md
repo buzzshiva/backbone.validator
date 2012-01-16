@@ -20,9 +20,9 @@ I then stumbled across [jquery-validation][3], which has some nifty builtin
 validators, caught a whiff of time-to-scratch-my-own-itch, and thus was
 Backbone.Validator born.
 
-[1] https://github.com/n-time/backbone.validations
-[2] https://github.com/thedersen/backbone.validation
-[3] https://github.com/jzaefferer/jquery-validation
+[1]: https://github.com/n-time/backbone.validations
+[2]: https://github.com/thedersen/backbone.validation
+[3]: https://github.com/jzaefferer/jquery-validation
 
 ## Usage
 
