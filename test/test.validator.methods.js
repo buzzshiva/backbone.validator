@@ -12,7 +12,18 @@ $(function() {
     };
   }
 
-  module("Validator Methods");
+  module("Backbone.Validator Builtins");
+
+  test('required', function() {
+    var req = testValidator('required');
+    ok(!req(undefined), 'Invalid: undefined');
+    ok(!req(null), 'Invalid: null');
+    ok(!req(''), 'Invalid: empty string');
+    ok(!req("\n"), 'Invalid: only whitespace');
+    ok(!req("   \t"), 'Invalid: only whitespace');
+    ok( req('           d'), 'Valid: any non-whitespace');
+    ok( req(5), 'Valid: numbers');
+  });
 
   test("url", function() {
     var method = testValidator("url");

@@ -75,10 +75,21 @@
     validate: function(attributes, options) {
       var name, value, errors = {};
 
+      // Short-circuit if no validators are defined.
+      if (!this.validators) return true;
+
       for (name in attributes) {
         value = attributes[name];
+
+        if (this.validators[name].required) {
+          if (!Validator.validators.required(value)) {
+            errors[name] = this.requiredMsg || 'required';
+            continue;
+          }
+        }
+
         if (!this.validateAttribute(name, value)) {
-          errors[name] = this.validators[name].msg;
+          errors[name] = this.validators[name].msg || 'invalid';
         }
       }
 
@@ -95,12 +106,11 @@
     validateAttribute: function(name, value) {
       var v, validators, options;
 
-      if (!this.validators) return true;
-
       validators = this.validators[name];
 
       for (v in validators) {
         if (v === 'msg') continue;
+        if (v === 'required') continue;
         options = validators[v];
         if (!Validator.validators[v](value, options)) return false;
       }
@@ -116,6 +126,12 @@
    */
 
   Validator.validators = {
+    required: function(value) {
+      if (!value) return false;
+      if (_.isString(value) && !/\S/.test(value)) return false;
+      return true;
+    },
+
     length: function(value, options) {
       var min = options.min || 0
         , max = options.max || Infinity
