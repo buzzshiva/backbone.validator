@@ -25,6 +25,51 @@ $(function() {
     ok( req(5), 'Valid: numbers');
   });
 
+  test('fn (function object)', function() {
+    var equalTo3 = function(value) { return value == 3; };
+    var Model = Backbone.Validator.extend({
+      validators: {
+        number: {
+          fn: equalTo3,
+          msg: 'Gotta be equal to 3'
+        }
+      }
+    });
+    var model = new Model();
+    var errormsg;
+    model.bind('invalid:number', function(model, msg) {
+      errormsg = msg;
+    });
+    model.set({number: 4});
+    equals(errormsg, 'Gotta be equal to 3');
+    model.set({number: 3});
+    equals(model.get('number'), 3);
+  });
+
+  test('fn (string)', function() {
+    var Model = Backbone.Validator.extend({
+      validators: {
+        number: {
+          fn: 'equalToMe',
+          msg: 'Gotta be equal to Me'
+        }
+      },
+      me: 3,
+      equalToMe: function(value) {
+        return value == this.me;
+      }
+    });
+    var model = new Model();
+    var errormsg;
+    model.bind('invalid:number', function(model, msg) {
+      errormsg = msg;
+    });
+    model.set({number: 4});
+    equals(errormsg, 'Gotta be equal to Me');
+    model.set({number: 3});
+    equals(model.get('number'), 3);
+  });
+
   test("url", function() {
     var method = testValidator("url");
     ok( method( "http://bassistance.de/jquery/plugin.php?bla=blu" ), "Valid url" );

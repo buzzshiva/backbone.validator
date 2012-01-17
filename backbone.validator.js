@@ -104,15 +104,19 @@
      */
 
     validateAttribute: function(name, value) {
-      var v, validators, options;
+      var v, validators, options, validateFn;
 
       validators = this.validators[name];
 
       for (v in validators) {
-        if (v === 'msg') continue;
-        if (v === 'required') continue;
+        if (v === ('msg' || 'required')) continue;
+
+        if (!(validateFn = Validator.validators[v])) {
+          throw new Error('Validator "' + v + '" doesn\'t exist!');
+        }
+
         options = validators[v];
-        if (!Validator.validators[v](value, options)) return false;
+        if (!validateFn.call(this, value, options)) return false;
       }
 
       return true;
@@ -142,6 +146,16 @@
       }
 
       return len >= min && len <= max;
+    },
+
+    fn: function(value, fn) {
+      if (_.isFunction(fn)) return fn.call(this, value);
+      if (_.isString(fn)) {
+        if (!this[fn]) {
+          throw new Error(fn + " is not a property of " + this);
+        }
+        return this[fn].call(this, value);
+      }
     },
 
     min: function(value, minValue) {

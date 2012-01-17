@@ -103,4 +103,19 @@ $(document).ready(function() {
     equals(invalidEmailMsg, 'Email must be in the right format');
   });
 
+  test('nonexistent validator throws', function() {
+    var Model = Backbone.Validator.extend({
+      validators: {
+        number: {
+          doesntexist: true,
+          msg: 'alas, i am ephemeral'
+        }
+      }
+    });
+    var model = new Model();
+    raises(function() {
+      model.set({number: 42});
+    });
+  });
+
 });
