@@ -38,7 +38,7 @@ $(document).ready(function() {
     });
     var model = new Model();
     var invalidEmailMsg;
-    model.bind('invalid:email', function(model, msg) {
+    model.bind('error:email', function(model, msg) {
       invalidEmailMsg = msg;
     });
     model.set({email: 'asdf'});
@@ -53,7 +53,7 @@ $(document).ready(function() {
     });
     var model = new Model();
     var invalidEmailMsg;
-    model.bind('invalid:email', function(model, msg) {
+    model.bind('error:email', function(model, msg) {
       invalidEmailMsg = msg;
     });
     model.set({email: 'asdf'});
@@ -72,7 +72,7 @@ $(document).ready(function() {
     });
     var model = new Model();
     var invalidEmailMsg;
-    model.bind('invalid:email', function(model, msg) {
+    model.bind('error:email', function(model, msg) {
       invalidEmailMsg = msg;
     });
     model.set({email: ''});
@@ -94,7 +94,7 @@ $(document).ready(function() {
     });
     var model = new Model();
     var invalidEmailMsg;
-    model.bind('invalid:email', function(model, msg) {
+    model.bind('error:email', function(model, msg) {
       invalidEmailMsg = msg;
     });
     model.set({email: ''});

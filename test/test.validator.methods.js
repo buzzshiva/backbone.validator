@@ -37,7 +37,7 @@ $(function() {
     });
     var model = new Model();
     var errormsg;
-    model.bind('invalid:number', function(model, msg) {
+    model.bind('error:number', function(model, msg) {
       errormsg = msg;
     });
     model.set({number: 4});
@@ -61,7 +61,7 @@ $(function() {
     });
     var model = new Model();
     var errormsg;
-    model.bind('invalid:number', function(model, msg) {
+    model.bind('error:number', function(model, msg) {
       errormsg = msg;
     });
     model.set({number: 4});
@@ -224,8 +224,8 @@ $(function() {
     ok(!method( "212 123 4567" ), "Invalid us phone number" );
   });
 
-  test("pattern", function() {
-    var pat = testValidator("pattern", /^AR\d{4}$/);
+  test("matches", function() {
+    var pat = testValidator("matches", /^AR\d{4}$/);
     ok( pat( "AR1004" ), "Correct format for the given RegExp" );
     ok( !pat( "BR1004" ), "Invalid format for the given RegExp" );
   });

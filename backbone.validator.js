@@ -54,7 +54,7 @@
       } else {
         this.trigger('error', this, errors, options);
         for (name in errors) {
-          this.trigger('invalid:' + name, this, errors[name], options);
+          this.trigger('error:' + name, this, errors[name], options);
         }
       }
       return false;
@@ -166,7 +166,7 @@
       return value <= maxValue;
     },
 
-    pattern: function(value, pattern) {
+    matches: function(value, pattern) {
       return pattern.test(value);
     },
 
